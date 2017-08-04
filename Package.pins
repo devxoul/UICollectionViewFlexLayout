@@ -1,0 +1,12 @@
+{
+  "autoPin": true,
+  "pins": [
+    {
+      "package": "Stubber",
+      "reason": null,
+      "repositoryURL": "https://github.com/devxoul/Stubber.git",
+      "version": "0.2.0"
+    }
+  ],
+  "version": 1
+}
