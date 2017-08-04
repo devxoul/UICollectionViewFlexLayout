@@ -1,3 +1,4 @@
+#if os(iOS)
 import XCTest
 import UICollectionViewFlexLayout
 
@@ -31,3 +32,4 @@ class TestCase: XCTestCase {
     return self.layout?.layoutAttributesForItem(at: indexPath)?.frame
   }
 }
+#endif

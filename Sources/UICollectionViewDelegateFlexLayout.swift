@@ -1,3 +1,4 @@
+#if os(iOS)
 import UIKit
 
 @objc public protocol UICollectionViewDelegateFlexLayout: UICollectionViewDelegate {
@@ -12,3 +13,4 @@ import UIKit
   @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, marginForItemAt indexPath: IndexPath) -> UIEdgeInsets
   @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, paddingForItemAt indexPath: IndexPath) -> UIEdgeInsets
 }
+#endif

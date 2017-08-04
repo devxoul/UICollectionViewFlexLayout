@@ -1,3 +1,4 @@
+#if os(iOS)
 import UIKit
 
 public let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
@@ -179,3 +180,4 @@ extension UICollectionViewFlexLayout {
     return delegate.collectionView?(collectionView, layout: self, paddingForItemAt: indexPath) ?? .zero
   }
 }
+#endif

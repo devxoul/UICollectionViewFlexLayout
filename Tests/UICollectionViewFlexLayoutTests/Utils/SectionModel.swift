@@ -1,3 +1,4 @@
+#if os(iOS)
 import struct Foundation.IndexPath
 
 protocol SectionModelType {
@@ -10,3 +11,4 @@ extension Array where Element: SectionModelType {
     return self[indexPath.section].items[indexPath.item]
   }
 }
+#endif

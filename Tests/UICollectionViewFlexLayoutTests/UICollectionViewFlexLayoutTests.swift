@@ -1,3 +1,4 @@
+#if os(iOS)
 import XCTest
 import UICollectionViewFlexLayout
 
@@ -222,3 +223,4 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.layout.maximumWidth(forItemAt: IndexPath(item: 0, section: 0)), 303)
   }
 }
+#endif

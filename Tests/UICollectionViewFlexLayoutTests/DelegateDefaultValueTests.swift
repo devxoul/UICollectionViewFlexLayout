@@ -1,3 +1,4 @@
+#if os(iOS)
 import XCTest
 @testable import UICollectionViewFlexLayout
 
@@ -74,3 +75,4 @@ final class DelegateDefaultValueTests: TestCase, UICollectionViewDelegateFlexLay
     XCTAssertEqual(layout.padding(forItemAt: IndexPath(item: 0, section: 0)), .zero)
   }
 }
+#endif

@@ -1,3 +1,4 @@
+#if os(iOS)
 import UIKit
 import Stubber
 import UICollectionViewFlexLayout
@@ -35,3 +36,4 @@ final class LayoutDelegate: NSObject, UICollectionViewDelegateFlexLayout, Stub {
     return stubbed(collectionView(_:layout:paddingForItemAt:), args: (collectionView, collectionViewLayout, indexPath), default: .zero)
   }
 }
+#endif

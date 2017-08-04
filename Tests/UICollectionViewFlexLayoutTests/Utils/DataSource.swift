@@ -1,3 +1,4 @@
+#if os(iOS)
 import class Foundation.NSObject
 import struct Foundation.IndexPath
 
@@ -50,3 +51,4 @@ class DataSource<Section: SectionModelType>: NSObject, UICollectionViewDataSourc
     collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionBackground, withReuseIdentifier: "myBackgroundView", for: indexPath)
   }
 }
+#endif
