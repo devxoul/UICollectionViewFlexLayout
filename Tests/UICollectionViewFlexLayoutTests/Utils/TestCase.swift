@@ -14,6 +14,7 @@ class TestCase: XCTestCase {
     self.delegate = LayoutDelegate()
     self.collectionView = UICollectionView(frame: frame, collectionViewLayout: self.layout)
     self.collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+    self.collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionBackground, withReuseIdentifier: "backgroundView")
     self.collectionView.delegate = self.delegate
   }
 
@@ -22,9 +23,15 @@ class TestCase: XCTestCase {
   }
 
   func dataSource<S: SectionModelType>(for type: S.Type) -> DataSource<S> {
-    return DataSource<S>(collectionView: self.collectionView) { collectionView, indexPath, _ in
-      collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-    }
+    return DataSource<S>(
+      collectionView: self.collectionView,
+      cellFactory: { collectionView, indexPath, _ in
+        collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+      },
+      supplementaryViewFactory: { collectionView, kind, indexPath, _ in
+        collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "backgroundView", for: indexPath)
+      }
+    )
   }
 
   func frame(at section: Int, _ item: Int) -> CGRect? {

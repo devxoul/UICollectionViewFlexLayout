@@ -1,16 +1,14 @@
 #if os(iOS)
-import class Foundation.NSObject
-import struct Foundation.IndexPath
-
-import class UIKit.UICollectionView
-import class UIKit.UICollectionViewCell
-import protocol UIKit.UICollectionViewDataSource
+import UIKit
+import UICollectionViewFlexLayout
 
 class DataSource<Section: SectionModelType>: NSObject, UICollectionViewDataSource {
   typealias CellFactory = (UICollectionView, IndexPath, Section.Item) -> UICollectionViewCell
+  typealias SupplementaryViewFactory = (UICollectionView, String, IndexPath, Section.Item) -> UICollectionReusableView
 
   private weak var collectionView: UICollectionView?
   private let cellFactory: CellFactory
+  private let supplementaryViewFactory: SupplementaryViewFactory
 
   var sections: [Section] = [] {
     didSet {
@@ -27,9 +25,10 @@ class DataSource<Section: SectionModelType>: NSObject, UICollectionViewDataSourc
     return self.sections[indexPath]
   }
 
-  init(collectionView: UICollectionView, cellFactory: @escaping CellFactory) {
+  init(collectionView: UICollectionView, cellFactory: @escaping CellFactory, supplementaryViewFactory: @escaping SupplementaryViewFactory) {
     self.collectionView = collectionView
     self.cellFactory = cellFactory
+    self.supplementaryViewFactory = supplementaryViewFactory
     super.init()
     collectionView.dataSource = self
   }
@@ -48,7 +47,8 @@ class DataSource<Section: SectionModelType>: NSObject, UICollectionViewDataSourc
   }
 
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionBackground, withReuseIdentifier: "myBackgroundView", for: indexPath)
+    let sectionItem = self.sections[indexPath.section].items[indexPath.item]
+    return self.supplementaryViewFactory(collectionView, kind, indexPath, sectionItem)
   }
 }
 #endif
