@@ -2,10 +2,12 @@
 import UIKit
 
 public let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
+public let UICollectionElementKindItemBackground = "UICollectionElementKindItemBackground"
 
 open class UICollectionViewFlexLayout: UICollectionViewLayout {
   private(set) var layoutAttributes: [IndexPath: UICollectionViewLayoutAttributes] = [:]
-  private(set) var backgroundAttributes: [Int: UICollectionViewLayoutAttributes] = [:]
+  private(set) var sectionBackgroundAttributes: [Int: UICollectionViewLayoutAttributes] = [:]
+  private(set) var itemBackgroundAttributes: [IndexPath: UICollectionViewLayoutAttributes] = [:]
   private(set) var cachedContentSize: CGSize = .zero
 
   override open func prepare() {
@@ -15,6 +17,8 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
     var offset: CGPoint = .zero
 
     self.layoutAttributes.removeAll()
+    self.itemBackgroundAttributes.removeAll()
+
     for section in 0..<collectionView.numberOfSections {
       let sectionVerticalSpacing: CGFloat
       if section > 0 {
@@ -54,6 +58,19 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         attributes.frame.origin.x = offset.x + itemMargin.left + itemPadding.left
         attributes.frame.origin.y = offset.y + itemMargin.top + itemPadding.top
 
+        let backgroundAttributes = UICollectionViewLayoutAttributes(
+          forSupplementaryViewOfKind: UICollectionElementKindItemBackground,
+          with: indexPath
+        )
+        backgroundAttributes.frame = CGRect(
+          x: attributes.frame.minX - itemPadding.left,
+          y: attributes.frame.minY - itemPadding.top,
+          width: attributes.frame.width + itemPadding.left + itemPadding.right,
+          height: attributes.frame.height + itemPadding.top + itemPadding.bottom
+        )
+        backgroundAttributes.zIndex = -1
+        self.itemBackgroundAttributes[indexPath] = backgroundAttributes
+
         offset.x += itemMargin.left + itemPadding.left + itemSize.width + itemPadding.right + itemMargin.right
         maxItemBottom = max(maxItemBottom, itemMargin.top + itemPadding.top + itemSize.height + itemPadding.bottom + itemMargin.bottom)
         self.layoutAttributes[indexPath] = attributes
@@ -63,7 +80,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
       self.cachedContentSize = CGSize(width: contentWidth, height: offset.y)
     }
 
-    self.backgroundAttributes.removeAll()
+    self.sectionBackgroundAttributes.removeAll()
     for section in 0..<collectionView.numberOfSections {
       let layoutAttributes = self.layoutAttributes.lazy.filter { $0.key.section == section }.map { $0.value }
       guard let minXAttribute = layoutAttributes.min(by: { $0.frame.minX < $1.frame.minX }) else { continue }
@@ -97,8 +114,8 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         width: width + sectionPadding.left + sectionPadding.right + itemPaddingLeft + itemPaddingRight + itemMarginLeft + itemMarginRight,
         height: height + sectionPadding.top + sectionPadding.bottom + itemPaddingTop + itemPaddingBottom + itemMarginTop + itemMarginBottom
       )
-      attributes.zIndex = -1
-      self.backgroundAttributes[section] = attributes
+      attributes.zIndex = -2
+      self.sectionBackgroundAttributes[section] = attributes
     }
   }
 
@@ -108,7 +125,8 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
 
   override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     return self.layoutAttributes.values.filter { $0.frame.intersects(rect) }
-      + self.backgroundAttributes.values.filter { $0.frame.intersects(rect) }
+      + self.sectionBackgroundAttributes.values.filter { $0.frame.intersects(rect) }
+      + self.itemBackgroundAttributes.values.filter { $0.frame.intersects(rect) }
   }
 
   override open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -116,9 +134,17 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
   }
 
   override open func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-    guard elementKind == UICollectionElementKindSectionBackground else { return nil }
-    guard indexPath.item == 0 else { return nil }
-    return self.backgroundAttributes[indexPath.section]
+    switch elementKind {
+    case UICollectionElementKindSectionBackground:
+      guard indexPath.item == 0 else { return nil }
+      return self.sectionBackgroundAttributes[indexPath.section]
+
+    case UICollectionElementKindItemBackground:
+      return self.itemBackgroundAttributes[indexPath]
+
+    default:
+      return super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
+    }
   }
 
   open func maximumWidth(forItemAt indexPath: IndexPath) -> CGFloat {
