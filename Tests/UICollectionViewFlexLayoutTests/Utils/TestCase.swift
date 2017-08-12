@@ -38,5 +38,10 @@ class TestCase: XCTestCase {
     let indexPath = IndexPath(item: item, section: section)
     return self.layout?.layoutAttributesForItem(at: indexPath)?.frame
   }
+
+  func background(at section: Int) -> CGRect? {
+    let indexPath = IndexPath(item: 0, section: section)
+    return self.layout?.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionBackground, at: indexPath)?.frame
+  }
 }
 #endif

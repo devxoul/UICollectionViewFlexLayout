@@ -28,6 +28,9 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.frame(at: 1, 0), CGRect(x: 0,  y: 90,  width: 50, height: 30))
     XCTAssertEqual(self.frame(at: 1, 1), CGRect(x: 50, y: 90,  width: 50, height: 30))
     XCTAssertEqual(self.frame(at: 1, 2), CGRect(x: 0,  y: 120, width: 50, height: 30))
+    XCTAssertEqual(self.background(at: 0), CGRect(x: 0, y: 0,  width: 100, height: 90))
+    XCTAssertEqual(self.background(at: 1), CGRect(x: 0, y: 90, width: 100, height: 60))
+    XCTAssertEqual(self.background(at: 2), nil)
   }
 
   func testItemSizeOnly_differentHeight() {
@@ -52,6 +55,9 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.frame(at: 1, 0), CGRect(x: 0,  y: 270, width: 40, height: 30))
     XCTAssertEqual(self.frame(at: 1, 1), CGRect(x: 40, y: 270, width: 40, height: 20))
     XCTAssertEqual(self.frame(at: 1, 2), CGRect(x: 0,  y: 300, width: 40, height: 90))
+    XCTAssertEqual(self.background(at: 0), CGRect(x: 0, y: 0,   width: 80, height: 270))
+    XCTAssertEqual(self.background(at: 1), CGRect(x: 0, y: 270, width: 80, height: 120))
+    XCTAssertEqual(self.background(at: 2), nil)
   }
 
   func testSectionPaddingMargin() {
@@ -78,6 +84,9 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.frame(at: 1, 0), CGRect(x: 8,  y: 112, width: 40, height: 30))
     XCTAssertEqual(self.frame(at: 1, 1), CGRect(x: 48, y: 112, width: 40, height: 30))
     XCTAssertEqual(self.frame(at: 1, 2), CGRect(x: 8,  y: 142, width: 40, height: 30))
+    XCTAssertEqual(self.background(at: 0), CGRect(x: 2, y: 1,   width: 94, height: 102))
+    XCTAssertEqual(self.background(at: 1), CGRect(x: 2, y: 107, width: 94, height: 72))
+    XCTAssertEqual(self.background(at: 2), nil)
   }
 
   func testSectionPaddingMarginSpacing() {
@@ -105,6 +114,9 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.frame(at: 1, 2), CGRect(x: 8,  y: 162, width: 40, height: 30))
     XCTAssertEqual(self.frame(at: 2, 0), CGRect(x: 8,  y: 228, width: 40, height: 30))
     XCTAssertEqual(self.frame(at: 2, 1), CGRect(x: 48, y: 228, width: 40, height: 30))
+    XCTAssertEqual(self.background(at: 0), CGRect(x: 2, y: 1,   width: 94, height: 102))
+    XCTAssertEqual(self.background(at: 1), CGRect(x: 2, y: 127, width: 94, height: 72))
+    XCTAssertEqual(self.background(at: 2), CGRect(x: 2, y: 223, width: 94, height: 42))
   }
 
   func testItemPaddingMargin() {
@@ -131,6 +143,9 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.frame(at: 1, 0), CGRect(x: 8,  y: 174, width: 30, height: 40))
     XCTAssertEqual(self.frame(at: 1, 1), CGRect(x: 58, y: 174, width: 30, height: 40))
     XCTAssertEqual(self.frame(at: 1, 2), CGRect(x: 8,  y: 230, width: 30, height: 40))
+    XCTAssertEqual(self.background(at: 0), CGRect(x: 0, y: 0,   width: 100, height: 168))
+    XCTAssertEqual(self.background(at: 1), CGRect(x: 0, y: 168, width: 100, height: 112))
+    XCTAssertEqual(self.background(at: 2), nil)
   }
 
   func testItemPaddingMarginSpacing() {
@@ -163,6 +178,9 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.frame(at: 1, 0), CGRect(x: 8,  y: 214, width: 15, height: 40))
     XCTAssertEqual(self.frame(at: 1, 1), CGRect(x: 53, y: 214, width: 15, height: 40))
     XCTAssertEqual(self.frame(at: 1, 2), CGRect(x: 8,  y: 290, width: 15, height: 40))
+    XCTAssertEqual(self.background(at: 0), CGRect(x: 0, y: 0,   width: 80, height: 208))
+    XCTAssertEqual(self.background(at: 1), CGRect(x: 0, y: 208, width: 80, height: 132))
+    XCTAssertEqual(self.background(at: 2), nil)
   }
 
   func testEverything() {
@@ -204,6 +222,9 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.frame(at: 1, 0), CGRect(x: 32,  y: 260, width: 60, height: 40))
     XCTAssertEqual(self.frame(at: 1, 1), CGRect(x: 164, y: 260, width: 60, height: 40))
     XCTAssertEqual(self.frame(at: 1, 2), CGRect(x: 296, y: 260, width: 60, height: 40))
+    XCTAssertEqual(self.background(at: 0), CGRect(x: 2, y: 1,   width: 390, height: 218))
+    XCTAssertEqual(self.background(at: 1), CGRect(x: 2, y: 233, width: 390, height: 100))
+    XCTAssertEqual(self.background(at: 2), nil)
   }
 
   func testMaximumWidth() {
