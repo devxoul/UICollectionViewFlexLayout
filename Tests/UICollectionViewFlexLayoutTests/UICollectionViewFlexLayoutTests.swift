@@ -124,12 +124,12 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     ]
     XCTAssertEqual(self.collectionView.contentSize, CGSize(width: 100, height: 280))
     XCTAssertEqual(self.frame(at: 0, 0), CGRect(x: 8,  y: 6,   width: 30, height: 40))
-    XCTAssertEqual(self.frame(at: 0, 1), CGRect(x: 50, y: 6,   width: 30, height: 40))
+    XCTAssertEqual(self.frame(at: 0, 1), CGRect(x: 58, y: 6,   width: 30, height: 40))
     XCTAssertEqual(self.frame(at: 0, 2), CGRect(x: 8,  y: 62,  width: 30, height: 40))
-    XCTAssertEqual(self.frame(at: 0, 3), CGRect(x: 50, y: 62,  width: 30, height: 40))
+    XCTAssertEqual(self.frame(at: 0, 3), CGRect(x: 58, y: 62,  width: 30, height: 40))
     XCTAssertEqual(self.frame(at: 0, 4), CGRect(x: 8,  y: 118, width: 30, height: 40))
     XCTAssertEqual(self.frame(at: 1, 0), CGRect(x: 8,  y: 174, width: 30, height: 40))
-    XCTAssertEqual(self.frame(at: 1, 1), CGRect(x: 50, y: 174, width: 30, height: 40))
+    XCTAssertEqual(self.frame(at: 1, 1), CGRect(x: 58, y: 174, width: 30, height: 40))
     XCTAssertEqual(self.frame(at: 1, 2), CGRect(x: 8,  y: 230, width: 30, height: 40))
   }
 
@@ -156,12 +156,12 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     ]
     XCTAssertEqual(self.collectionView.contentSize, CGSize(width: 100, height: 340))
     XCTAssertEqual(self.frame(at: 0, 0), CGRect(x: 8,  y: 6,   width: 15, height: 40))
-    XCTAssertEqual(self.frame(at: 0, 1), CGRect(x: 45, y: 6,   width: 15, height: 40))
+    XCTAssertEqual(self.frame(at: 0, 1), CGRect(x: 53, y: 6,   width: 15, height: 40))
     XCTAssertEqual(self.frame(at: 0, 2), CGRect(x: 8,  y: 82,  width: 15, height: 40))
-    XCTAssertEqual(self.frame(at: 0, 3), CGRect(x: 45, y: 82,  width: 15, height: 40))
+    XCTAssertEqual(self.frame(at: 0, 3), CGRect(x: 53, y: 82,  width: 15, height: 40))
     XCTAssertEqual(self.frame(at: 0, 4), CGRect(x: 8,  y: 158, width: 15, height: 40))
     XCTAssertEqual(self.frame(at: 1, 0), CGRect(x: 8,  y: 214, width: 15, height: 40))
-    XCTAssertEqual(self.frame(at: 1, 1), CGRect(x: 45, y: 214, width: 15, height: 40))
+    XCTAssertEqual(self.frame(at: 1, 1), CGRect(x: 53, y: 214, width: 15, height: 40))
     XCTAssertEqual(self.frame(at: 1, 2), CGRect(x: 8,  y: 290, width: 15, height: 40))
   }
 
@@ -197,13 +197,13 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     ]
     XCTAssertEqual(self.collectionView.contentSize, CGSize(width: 400, height: 336))
     XCTAssertEqual(self.frame(at: 0, 0), CGRect(x: 32,  y: 28,  width: 60, height: 40))
-    XCTAssertEqual(self.frame(at: 0, 1), CGRect(x: 140, y: 28,  width: 60, height: 40))
-    XCTAssertEqual(self.frame(at: 0, 2), CGRect(x: 248, y: 28,  width: 60, height: 40))
+    XCTAssertEqual(self.frame(at: 0, 1), CGRect(x: 164, y: 28,  width: 60, height: 40))
+    XCTAssertEqual(self.frame(at: 0, 2), CGRect(x: 296, y: 28,  width: 60, height: 40))
     XCTAssertEqual(self.frame(at: 0, 3), CGRect(x: 32,  y: 146, width: 60, height: 40))
-    XCTAssertEqual(self.frame(at: 0, 4), CGRect(x: 140, y: 146, width: 60, height: 40))
+    XCTAssertEqual(self.frame(at: 0, 4), CGRect(x: 164, y: 146, width: 60, height: 40))
     XCTAssertEqual(self.frame(at: 1, 0), CGRect(x: 32,  y: 260, width: 60, height: 40))
-    XCTAssertEqual(self.frame(at: 1, 1), CGRect(x: 140, y: 260, width: 60, height: 40))
-    XCTAssertEqual(self.frame(at: 1, 2), CGRect(x: 248, y: 260, width: 60, height: 40))
+    XCTAssertEqual(self.frame(at: 1, 1), CGRect(x: 164, y: 260, width: 60, height: 40))
+    XCTAssertEqual(self.frame(at: 1, 2), CGRect(x: 296, y: 260, width: 60, height: 40))
   }
 
   func testMaximumWidth() {

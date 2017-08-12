@@ -54,7 +54,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         attributes.frame.origin.x = offset.x + itemMargin.left + itemPadding.left
         attributes.frame.origin.y = offset.y + itemMargin.top + itemPadding.top
 
-        offset.x += itemSize.width + itemPadding.right + itemMargin.right
+        offset.x += itemMargin.left + itemPadding.left + itemSize.width + itemPadding.right + itemMargin.right
         maxItemBottom = max(maxItemBottom, itemMargin.top + itemPadding.top + itemSize.height + itemPadding.bottom + itemMargin.bottom)
         self.layoutAttributes[indexPath] = attributes
       }
@@ -80,15 +80,22 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         forSupplementaryViewOfKind: UICollectionElementKindSectionBackground,
         with: IndexPath(item: 0, section: section)
       )
+
+      let itemMarginLeft = self.margin(forItemAt: minXAttribute.indexPath).left
+      let itemMarginTop = self.margin(forItemAt: minYAttribute.indexPath).top
+      let itemMarginRight = self.margin(forItemAt: maxXAttribute.indexPath).right
+      let itemMarginBottom = self.margin(forItemAt: maxYAttribute.indexPath).bottom
+
       let itemPaddingLeft = self.padding(forItemAt: minXAttribute.indexPath).left
       let itemPaddingTop = self.padding(forItemAt: minYAttribute.indexPath).top
       let itemPaddingRight = self.padding(forItemAt: maxXAttribute.indexPath).right
       let itemPaddingBottom = self.padding(forItemAt: maxYAttribute.indexPath).bottom
+
       attributes.frame = CGRect(
-        x: minX - sectionPadding.left - itemPaddingLeft,
-        y: minY - sectionPadding.top - itemPaddingTop,
-        width: width + sectionPadding.left + sectionPadding.right + itemPaddingLeft + itemPaddingRight,
-        height: height + sectionPadding.top + sectionPadding.bottom + itemPaddingTop + itemPaddingBottom
+        x: minX - sectionPadding.left - itemPaddingLeft - itemMarginLeft,
+        y: minY - sectionPadding.top - itemPaddingTop - itemMarginTop,
+        width: width + sectionPadding.left + sectionPadding.right + itemPaddingLeft + itemPaddingRight + itemMarginLeft + itemMarginRight,
+        height: height + sectionPadding.top + sectionPadding.bottom + itemPaddingTop + itemPaddingBottom + itemMarginTop + itemMarginBottom
       )
       attributes.zIndex = -1
       self.backgroundAttributes[section] = attributes
