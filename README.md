@@ -13,6 +13,7 @@ UICollectionViewFlexLayout is a drop-in replacement for UICollectionViewFlowLayo
 * [x] Section Margin
 * [x] Section Padding
 * [x] Section Background
+* [ ] Section Alignment
 * [x] Item Spacing
 * [x] Item Margin
 * [x] Item Padding
