@@ -17,6 +17,7 @@ UICollectionViewFlexLayout is a drop-in replacement for UICollectionViewFlowLayo
 * [x] Item Margin
 * [x] Item Padding
 * [x] Item Size
+* [x] Item Background
 
 ## Basic Concept
 
@@ -56,21 +57,25 @@ protocol UICollectionViewDelegateFlexLayout {
 }
 ```
 
-### Section Background
+### Section and Item Background
 
 ```swift
 // register
-collectionView.register(MyBackgroundView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionBackground, withReuseIdentifier: "myBackgroundView")
+collectionView.register(MySectionBackgroundView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionBackground, withReuseIdentifier: "mySectionBackgroundView")
+collectionView.register(MyItemBackgroundView.self, forSupplementaryViewOfKind: UICollectionElementKindItemBackground, withReuseIdentifier: "myItemBackgroundView")
 
 // configure
 func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-  let backgroundView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionBackground, withReuseIdentifier: "myBackgroundView", for: indexPath)
-  if indexPath.section == 0 {
-    backgroundView.backgroundColor = .white
-  } else {
-    backgroundView.backgroundColor = .clear
+  switch kind {
+  case UICollectionElementKindSectionBackground: // section background
+    return collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionBackground, withReuseIdentifier: "mySectionBackgroundView", for: indexPath)
+
+  case UICollectionElementKindItemBackground: // item background
+    return collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindItemBackground, withReuseIdentifier: "myItemBackgroundView", for: indexPath)
+
+  case foo: // else
+    return bar
   }
-  return backgroundView
 }
 ```
 
