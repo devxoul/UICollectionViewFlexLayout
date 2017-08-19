@@ -42,5 +42,5 @@ script:
 
 after_success:
   - if [ $TEST == 1 ]; then
-      bash <(curl -s https://codecov.io/bash) -J 'UICollectionViewFlexLayout';
+      bash <(curl -s https://codecov.io/bash) -J 'UICollectionViewFlexLayout' -X xcodeplist;
     fi
