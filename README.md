@@ -19,6 +19,7 @@ UICollectionViewFlexLayout is a drop-in replacement for UICollectionViewFlowLayo
 * [x] Item Padding
 * [x] Item Size
 * [x] Item Background
+* [x] Item Z-Index
 
 ## Basic Concept
 
@@ -55,6 +56,9 @@ protocol UICollectionViewDelegateFlexLayout {
 
   // item size
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+
+  // item z-index
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, zIndexForItemAt indexPath: IndexPath) -> Int
 }
 ```
 
