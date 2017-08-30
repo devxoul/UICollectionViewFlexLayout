@@ -309,6 +309,63 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.cell(at: 1, 2)?.zIndex, 4)
   }
 
+  func testBackgroundZIndex() {
+    self.delegate.stub(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
+      return CGSize(width: 50, height: 50)
+    }
+    self.delegate.stub(self.delegate.collectionView(_:layout:zIndexForItemAt:)) { _, _, indexPath in
+      return -1 * (10 * indexPath.section + indexPath.item)
+    }
+
+    let dataSource = self.dataSource(for: BasicSection.self)
+    dataSource.sections = [
+      BasicSection(items: .init(repeating: .init(), count: 3)),
+      BasicSection(items: .init(repeating: .init(), count: 2)),
+      BasicSection(items: .init(repeating: .init(), count: 5)),
+    ]
+
+    let minimumItemZIndex: Int = dataSource.sections.enumerated()
+      .flatMap { sectionIndex, section in
+        section.items.indices.flatMap { itemIndex in
+          self.cell(at: sectionIndex, itemIndex)
+        }
+      }
+      .map { $0.zIndex }
+      .min() ?? 0
+    XCTAssertEqual(minimumItemZIndex, -24)
+
+    let minimumSectionZIndex: Int = dataSource.sections.indices
+      .flatMap { self.background(at: $0)?.zIndex }
+      .min() ?? 0
+    XCTAssertLessThan(minimumSectionZIndex, minimumItemZIndex)
+
+    XCTAssertLessThan(self.background(at: 0)!.zIndex, minimumItemZIndex)
+    XCTAssertLessThan(self.background(at: 1)!.zIndex, minimumItemZIndex)
+    XCTAssertLessThan(self.background(at: 2)!.zIndex, minimumItemZIndex)
+
+    XCTAssertLessThan(self.background(at: 0, 0)!.zIndex, minimumItemZIndex)
+    XCTAssertLessThan(self.background(at: 0, 1)!.zIndex, minimumItemZIndex)
+    XCTAssertLessThan(self.background(at: 0, 2)!.zIndex, minimumItemZIndex)
+    XCTAssertLessThan(self.background(at: 1, 0)!.zIndex, minimumItemZIndex)
+    XCTAssertLessThan(self.background(at: 1, 1)!.zIndex, minimumItemZIndex)
+    XCTAssertLessThan(self.background(at: 2, 0)!.zIndex, minimumItemZIndex)
+    XCTAssertLessThan(self.background(at: 2, 1)!.zIndex, minimumItemZIndex)
+    XCTAssertLessThan(self.background(at: 2, 2)!.zIndex, minimumItemZIndex)
+    XCTAssertLessThan(self.background(at: 2, 3)!.zIndex, minimumItemZIndex)
+    XCTAssertLessThan(self.background(at: 2, 4)!.zIndex, minimumItemZIndex)
+
+    XCTAssertGreaterThan(self.background(at: 0, 0)!.zIndex, minimumSectionZIndex)
+    XCTAssertGreaterThan(self.background(at: 0, 1)!.zIndex, minimumSectionZIndex)
+    XCTAssertGreaterThan(self.background(at: 0, 2)!.zIndex, minimumSectionZIndex)
+    XCTAssertGreaterThan(self.background(at: 1, 0)!.zIndex, minimumSectionZIndex)
+    XCTAssertGreaterThan(self.background(at: 1, 1)!.zIndex, minimumSectionZIndex)
+    XCTAssertGreaterThan(self.background(at: 2, 0)!.zIndex, minimumSectionZIndex)
+    XCTAssertGreaterThan(self.background(at: 2, 1)!.zIndex, minimumSectionZIndex)
+    XCTAssertGreaterThan(self.background(at: 2, 2)!.zIndex, minimumSectionZIndex)
+    XCTAssertGreaterThan(self.background(at: 2, 3)!.zIndex, minimumSectionZIndex)
+    XCTAssertGreaterThan(self.background(at: 2, 4)!.zIndex, minimumSectionZIndex)
+  }
+
   func testMaximumWidth() {
     self.collectionView.frame.size.width = 375
     self.delegate.stub(self.delegate.collectionView(_:layout:marginForSectionAt:)) { _ in

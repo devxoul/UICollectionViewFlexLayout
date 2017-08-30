@@ -115,8 +115,16 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         width: width + sectionPadding.left + sectionPadding.right + itemPaddingLeft + itemPaddingRight + itemMarginLeft + itemMarginRight,
         height: height + sectionPadding.top + sectionPadding.bottom + itemPaddingTop + itemPaddingBottom + itemMarginTop + itemMarginBottom
       )
-      attributes.zIndex = -2
       self.sectionBackgroundAttributes[section] = attributes
+    }
+
+    // zIndex
+    let minimumItemZIndex: Int = self.layoutAttributes.values.map { $0.zIndex }.min() ?? 0
+    for attributes in self.itemBackgroundAttributes.values {
+      attributes.zIndex = minimumItemZIndex - 1
+    }
+    for attributes in self.sectionBackgroundAttributes.values {
+      attributes.zIndex = minimumItemZIndex - 2
     }
   }
 
