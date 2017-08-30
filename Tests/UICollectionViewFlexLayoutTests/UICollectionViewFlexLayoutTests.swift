@@ -294,6 +294,23 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.background(at: 1, 2), CGRect(x: 282, y: 247, width: 90, height: 68))
   }
 
+  func testZIndex() {
+    self.delegate.stub(self.delegate.collectionView(_:layout:zIndexForItemAt:)) { _, _, indexPath in
+      return indexPath.item * 2
+    }
+    self.dataSource(for: BasicSection.self).sections = [
+      BasicSection(items: .init(repeating: .init(), count: 2)),
+      BasicSection(items: .init(repeating: .init(), count: 3)),
+    ]
+    XCTAssertEqual(self.zIndex(at: 0, 0), 0)
+    XCTAssertEqual(self.zIndex(at: 0, 1), 2)
+    XCTAssertNil(self.zIndex(at: 0, 2))
+    XCTAssertEqual(self.zIndex(at: 1, 0), 0)
+    XCTAssertEqual(self.zIndex(at: 1, 1), 2)
+    XCTAssertEqual(self.zIndex(at: 1, 2), 4)
+    XCTAssertNil(self.zIndex(at: 1, 3))
+  }
+
   func testMaximumWidth() {
     self.collectionView.frame.size.width = 375
     self.delegate.stub(self.delegate.collectionView(_:layout:marginForSectionAt:)) { _ in

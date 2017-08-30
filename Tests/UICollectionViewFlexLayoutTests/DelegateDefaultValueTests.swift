@@ -45,5 +45,9 @@ final class DelegateDefaultValueTests: TestCase, UICollectionViewDelegateFlexLay
   func testItemPadding() {
     XCTAssertEqual(self.flexLayout.padding(forItemAt: IndexPath(item: 0, section: 0)), .zero)
   }
+
+  func testItemZIndex() {
+    XCTAssertEqual(self.flexLayout.zIndex(forItemAt: IndexPath(item: 0, section: 0)), 0)
+  }
 }
 #endif

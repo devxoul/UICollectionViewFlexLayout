@@ -57,6 +57,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         attributes.size = itemSize
         attributes.frame.origin.x = offset.x + itemMargin.left + itemPadding.left
         attributes.frame.origin.y = offset.y + itemMargin.top + itemPadding.top
+        attributes.zIndex = self.zIndex(forItemAt: indexPath)
 
         let backgroundAttributes = UICollectionViewLayoutAttributes(
           forSupplementaryViewOfKind: UICollectionElementKindItemBackground,
@@ -211,6 +212,11 @@ extension UICollectionViewFlexLayout {
   func padding(forItemAt indexPath: IndexPath) -> UIEdgeInsets {
     guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
     return delegate.collectionView?(collectionView, layout: self, paddingForItemAt: indexPath) ?? .zero
+  }
+
+  func zIndex(forItemAt indexPath: IndexPath) -> Int {
+    guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
+    return delegate.collectionView?(collectionView, layout: self, zIndexForItemAt: indexPath) ?? 0
   }
 }
 #endif

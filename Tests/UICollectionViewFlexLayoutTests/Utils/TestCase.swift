@@ -56,5 +56,10 @@ class TestCase: XCTestCase {
     let indexPath = IndexPath(item: item, section: section)
     return self.layout?.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindItemBackground, at: indexPath)?.frame
   }
+
+  func zIndex(at section: Int, _ item: Int) -> Int? {
+    let indexPath = IndexPath(item: item, section: section)
+    return self.layout?.layoutAttributesForItem(at: indexPath)?.zIndex
+  }
 }
 #endif

@@ -35,5 +35,9 @@ final class LayoutDelegate: NSObject, UICollectionViewDelegateFlexLayout, Stub {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, paddingForItemAt indexPath: IndexPath) -> UIEdgeInsets {
     return stubbed(collectionView(_:layout:paddingForItemAt:), args: (collectionView, collectionViewLayout, indexPath), default: .zero)
   }
+
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, zIndexForItemAt indexPath: IndexPath) -> Int {
+    return stubbed(collectionView(_:layout:zIndexForItemAt:), args: (collectionView, collectionViewLayout, indexPath), default: 0)
+  }
 }
 #endif
