@@ -42,24 +42,19 @@ class TestCase: XCTestCase {
     )
   }
 
-  func frame(at section: Int, _ item: Int) -> CGRect? {
+  func cell(at section: Int, _ item: Int) -> UICollectionViewLayoutAttributes? {
     let indexPath = IndexPath(item: item, section: section)
-    return self.layout?.layoutAttributesForItem(at: indexPath)?.frame
+    return self.layout?.layoutAttributesForItem(at: indexPath)
   }
 
-  func background(at section: Int) -> CGRect? {
+  func background(at section: Int) -> UICollectionViewLayoutAttributes? {
     let indexPath = IndexPath(item: 0, section: section)
-    return self.layout?.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionBackground, at: indexPath)?.frame
+    return self.layout?.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionBackground, at: indexPath)
   }
 
-  func background(at section: Int, _ item: Int) -> CGRect? {
+  func background(at section: Int, _ item: Int) -> UICollectionViewLayoutAttributes? {
     let indexPath = IndexPath(item: item, section: section)
-    return self.layout?.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindItemBackground, at: indexPath)?.frame
-  }
-
-  func zIndex(at section: Int, _ item: Int) -> Int? {
-    let indexPath = IndexPath(item: item, section: section)
-    return self.layout?.layoutAttributesForItem(at: indexPath)?.zIndex
+    return self.layout?.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindItemBackground, at: indexPath)
   }
 }
 #endif
