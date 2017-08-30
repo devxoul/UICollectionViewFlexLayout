@@ -11,8 +11,13 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
   private(set) var cachedContentSize: CGSize = .zero
 
   override open func prepare() {
-    guard let collectionView = self.collectionView else { return }
+    self.prepareItemAttributes()
+    self.prepareSectionAttributes()
+    self.prepareZIndex()
+  }
 
+  private func prepareItemAttributes() {
+    guard let collectionView = self.collectionView else { return }
     let contentWidth = collectionView.frame.width
     var offset: CGPoint = .zero
 
@@ -80,7 +85,10 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
       offset.y += maxItemBottom + sectionPadding.bottom + sectionMargin.bottom
       self.cachedContentSize = CGSize(width: contentWidth, height: offset.y)
     }
+  }
 
+  private func prepareSectionAttributes() {
+    guard let collectionView = self.collectionView else { return }
     self.sectionBackgroundAttributes.removeAll()
     for section in 0..<collectionView.numberOfSections {
       let layoutAttributes = self.layoutAttributes.lazy.filter { $0.key.section == section }.map { $0.value }
@@ -117,8 +125,9 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
       )
       self.sectionBackgroundAttributes[section] = attributes
     }
+  }
 
-    // zIndex
+  private func prepareZIndex() {
     let minimumItemZIndex: Int = self.layoutAttributes.values.map { $0.zIndex }.min() ?? 0
     for attributes in self.itemBackgroundAttributes.values {
       attributes.zIndex = minimumItemZIndex - 1
