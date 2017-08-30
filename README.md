@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/devxoul/UICollectionViewFlexLayout.svg?branch=master)](https://travis-ci.org/devxoul/UICollectionViewFlexLayout)
 [![Codecov](https://img.shields.io/codecov/c/github/devxoul/UICollectionViewFlexLayout.svg)](https://codecov.io/gh/devxoul/UICollectionViewFlexLayout)
 
-UICollectionViewFlexLayout is a drop-in replacement for UICollectionViewFlowLayout. Currently in development.
+UICollectionViewFlexLayout is a drop-in replacement for UICollectionViewFlowLayout.
 
 ## Features
 
