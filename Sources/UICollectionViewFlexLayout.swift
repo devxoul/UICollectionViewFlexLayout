@@ -188,50 +188,50 @@ extension UICollectionViewFlexLayout {
     return self.collectionView?.delegate as? UICollectionViewDelegateFlexLayout
   }
 
-  func size(forItemAt indexPath: IndexPath) -> CGSize {
+  public func size(forItemAt indexPath: IndexPath) -> CGSize {
     guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
     return delegate.collectionView?(collectionView, layout: self, sizeForItemAt: indexPath) ?? .zero
   }
 
-  func verticalSpacing(betweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
+  public func verticalSpacing(betweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
     guard section != nextSection else { return 0 }
     guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
     return delegate.collectionView?(collectionView, layout: self, verticalSpacingBetweenSectionAt: section, and: nextSection) ?? 0
   }
 
-  func margin(forSectionAt section: Int) -> UIEdgeInsets {
+  public func margin(forSectionAt section: Int) -> UIEdgeInsets {
     guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
     return delegate.collectionView?(collectionView, layout: self, marginForSectionAt: section) ?? .zero
   }
 
-  func padding(forSectionAt section: Int) -> UIEdgeInsets {
+  public func padding(forSectionAt section: Int) -> UIEdgeInsets {
     guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
     return delegate.collectionView?(collectionView, layout: self, paddingForSectionAt: section) ?? .zero
   }
 
-  func horizontalSpacing(betweenItemAt indexPath: IndexPath, and nextIndexPath: IndexPath) -> CGFloat {
+  public func horizontalSpacing(betweenItemAt indexPath: IndexPath, and nextIndexPath: IndexPath) -> CGFloat {
     guard indexPath != nextIndexPath else { return 0 }
     guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
     return delegate.collectionView?(collectionView, layout: self, horizontalSpacingBetweenItemAt: indexPath, and: nextIndexPath) ?? 0
   }
 
-  func verticalSpacing(betweenItemAt indexPath: IndexPath, and nextIndexPath: IndexPath) -> CGFloat {
+  public func verticalSpacing(betweenItemAt indexPath: IndexPath, and nextIndexPath: IndexPath) -> CGFloat {
     guard indexPath != nextIndexPath else { return 0 }
     guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
     return delegate.collectionView?(collectionView, layout: self, verticalSpacingBetweenItemAt: indexPath, and: nextIndexPath) ?? 0
   }
 
-  func margin(forItemAt indexPath: IndexPath) -> UIEdgeInsets {
+  public func margin(forItemAt indexPath: IndexPath) -> UIEdgeInsets {
     guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
     return delegate.collectionView?(collectionView, layout: self, marginForItemAt: indexPath) ?? .zero
   }
 
-  func padding(forItemAt indexPath: IndexPath) -> UIEdgeInsets {
+  public func padding(forItemAt indexPath: IndexPath) -> UIEdgeInsets {
     guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
     return delegate.collectionView?(collectionView, layout: self, paddingForItemAt: indexPath) ?? .zero
   }
 
-  func zIndex(forItemAt indexPath: IndexPath) -> Int {
+  public func zIndex(forItemAt indexPath: IndexPath) -> Int {
     guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
     return delegate.collectionView?(collectionView, layout: self, zIndexForItemAt: indexPath) ?? 0
   }
