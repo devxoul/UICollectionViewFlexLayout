@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Stubber",
+        "repositoryURL": "https://github.com/devxoul/Stubber.git",
+        "state": {
+          "branch": null,
+          "revision": "256343b8527acb340ad7082b34ff93221b303bf4",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,5 +1,6 @@
 #if os(iOS)
 import XCTest
+import Stubber
 import UICollectionViewFlexLayout
 
 class TestCase: XCTestCase {
@@ -21,6 +22,7 @@ class TestCase: XCTestCase {
 
   override func tearDown() {
     super.tearDown()
+    Stubber.clear()
   }
 
   func dataSource<S: SectionModelType>(for type: S.Type) -> DataSource<S> {
