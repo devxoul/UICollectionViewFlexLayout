@@ -1,5 +1,6 @@
 #if os(iOS)
 import XCTest
+import Stubber
 import UICollectionViewFlexLayout
 
 private struct BasicSection: SectionModelType {
@@ -12,7 +13,7 @@ private struct BasicSectionItem {
 final class UICollectionViewFlexLayoutTests: TestCase {
   func testItemSizeOnly() {
     self.collectionView.frame.size.width = 100
-    self.delegate.stub(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
       return CGSize(width: 50, height: 30)
     }
     self.dataSource(for: BasicSection.self).sections = [
@@ -45,7 +46,7 @@ final class UICollectionViewFlexLayoutTests: TestCase {
 
   func testItemSizeOnly_differentHeight() {
     self.collectionView.frame.size.width = 100
-    self.delegate.stub(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _, _, indexPath in
+    Stubber.register(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _, _, indexPath in
       if indexPath.item % 2 == 0 {
         return CGSize(width: 40, height: 30 * (1 + indexPath.item))
       } else {
@@ -82,13 +83,13 @@ final class UICollectionViewFlexLayoutTests: TestCase {
 
   func testSectionPaddingMargin() {
     self.collectionView.frame.size.width = 100
-    self.delegate.stub(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
       return CGSize(width: 40, height: 30)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:marginForSectionAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:marginForSectionAt:)) { _ in
       return UIEdgeInsets(top: 1, left: 2, bottom: 3, right: 4)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:paddingForSectionAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:paddingForSectionAt:)) { _ in
       return UIEdgeInsets(top: 5, left: 6, bottom: 7, right: 8)
     }
     self.dataSource(for: BasicSection.self).sections = [
@@ -121,16 +122,16 @@ final class UICollectionViewFlexLayoutTests: TestCase {
 
   func testSectionPaddingMarginSpacing() {
     self.collectionView.frame.size.width = 100
-    self.delegate.stub(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
       return CGSize(width: 40, height: 30)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:marginForSectionAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:marginForSectionAt:)) { _ in
       return UIEdgeInsets(top: 1, left: 2, bottom: 3, right: 4)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:paddingForSectionAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:paddingForSectionAt:)) { _ in
       return UIEdgeInsets(top: 5, left: 6, bottom: 7, right: 8)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:verticalSpacingBetweenSectionAt:and:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:verticalSpacingBetweenSectionAt:and:)) { _ in
       return 20
     }
     self.dataSource(for: BasicSection.self).sections = [
@@ -158,13 +159,13 @@ final class UICollectionViewFlexLayoutTests: TestCase {
 
   func testItemPaddingMargin() {
     self.collectionView.frame.size.width = 100
-    self.delegate.stub(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
       return CGSize(width: 30, height: 40)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:marginForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:marginForItemAt:)) { _ in
       return UIEdgeInsets(top: 5, left: 6, bottom: 7, right: 8)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:paddingForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:paddingForItemAt:)) { _ in
       return UIEdgeInsets(top: 1, left: 2, bottom: 3, right: 4)
     }
     self.dataSource(for: BasicSection.self).sections = [
@@ -197,19 +198,19 @@ final class UICollectionViewFlexLayoutTests: TestCase {
 
   func testItemPaddingMarginSpacing() {
     self.collectionView.frame.size.width = 100
-    self.delegate.stub(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
       return CGSize(width: 15, height: 40)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:marginForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:marginForItemAt:)) { _ in
       return UIEdgeInsets(top: 5, left: 6, bottom: 7, right: 8)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:paddingForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:paddingForItemAt:)) { _ in
       return UIEdgeInsets(top: 1, left: 2, bottom: 3, right: 4)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:horizontalSpacingBetweenItemAt:and:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:horizontalSpacingBetweenItemAt:and:)) { _ in
       return 10
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:verticalSpacingBetweenItemAt:and:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:verticalSpacingBetweenItemAt:and:)) { _ in
       return 20
     }
     self.dataSource(for: BasicSection.self).sections = [
@@ -242,28 +243,28 @@ final class UICollectionViewFlexLayoutTests: TestCase {
 
   func testEverything() {
     self.collectionView.frame.size.width = 400
-    self.delegate.stub(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
       return CGSize(width: 60, height: 40)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:marginForSectionAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:marginForSectionAt:)) { _ in
       return UIEdgeInsets(top: 1, left: 2, bottom: 3, right: 4)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:paddingForSectionAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:paddingForSectionAt:)) { _ in
       return UIEdgeInsets(top: 5, left: 6, bottom: 7, right: 8)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:verticalSpacingBetweenSectionAt:and:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:verticalSpacingBetweenSectionAt:and:)) { _ in
       return 10
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:marginForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:marginForItemAt:)) { _ in
       return UIEdgeInsets(top: 9, left: 10, bottom: 11, right: 12)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:paddingForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:paddingForItemAt:)) { _ in
       return UIEdgeInsets(top: 13, left: 14, bottom: 15, right: 16)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:horizontalSpacingBetweenItemAt:and:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:horizontalSpacingBetweenItemAt:and:)) { _ in
       return 20
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:verticalSpacingBetweenItemAt:and:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:verticalSpacingBetweenItemAt:and:)) { _ in
       return 30
     }
     self.dataSource(for: BasicSection.self).sections = [
@@ -295,7 +296,7 @@ final class UICollectionViewFlexLayoutTests: TestCase {
   }
 
   func testZIndex() {
-    self.delegate.stub(self.delegate.collectionView(_:layout:zIndexForItemAt:)) { _, _, indexPath in
+    Stubber.register(self.delegate.collectionView(_:layout:zIndexForItemAt:)) { _, _, indexPath in
       return indexPath.item * 2
     }
     self.dataSource(for: BasicSection.self).sections = [
@@ -310,10 +311,10 @@ final class UICollectionViewFlexLayoutTests: TestCase {
   }
 
   func testBackgroundZIndex() {
-    self.delegate.stub(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
       return CGSize(width: 50, height: 50)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:zIndexForItemAt:)) { _, _, indexPath in
+    Stubber.register(self.delegate.collectionView(_:layout:zIndexForItemAt:)) { _, _, indexPath in
       return -1 * (10 * indexPath.section + indexPath.item)
     }
 
@@ -368,16 +369,16 @@ final class UICollectionViewFlexLayoutTests: TestCase {
 
   func testMaximumWidth() {
     self.collectionView.frame.size.width = 375
-    self.delegate.stub(self.delegate.collectionView(_:layout:marginForSectionAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:marginForSectionAt:)) { _ in
       return UIEdgeInsets(top: 1, left: 2, bottom: 3, right: 4)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:paddingForSectionAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:paddingForSectionAt:)) { _ in
       return UIEdgeInsets(top: 5, left: 6, bottom: 7, right: 8)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:marginForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:marginForItemAt:)) { _ in
       return UIEdgeInsets(top: 9, left: 10, bottom: 11, right: 12)
     }
-    self.delegate.stub(self.delegate.collectionView(_:layout:paddingForItemAt:)) { _ in
+    Stubber.register(self.delegate.collectionView(_:layout:paddingForItemAt:)) { _ in
       return UIEdgeInsets(top: 13, left: 14, bottom: 15, right: 16)
     }
     XCTAssertEqual(self.layout.maximumWidth(forItemAt: IndexPath(item: 0, section: 0)), 303)
