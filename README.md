@@ -1,6 +1,6 @@
 # UICollectionViewFlexLayout
 
-![Swift](https://img.shields.io/badge/Swift-3.1-orange.svg)
+![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg)
 [![CocoaPods](http://img.shields.io/cocoapods/v/UICollectionViewFlexLayout.svg)](https://cocoapods.org/pods/UICollectionViewFlexLayout)
 [![Build Status](https://travis-ci.org/devxoul/UICollectionViewFlexLayout.svg?branch=master)](https://travis-ci.org/devxoul/UICollectionViewFlexLayout)
 [![Codecov](https://img.shields.io/codecov/c/github/devxoul/UICollectionViewFlexLayout.svg)](https://codecov.io/gh/devxoul/UICollectionViewFlexLayout)
@@ -13,7 +13,6 @@ UICollectionViewFlexLayout is a drop-in replacement for UICollectionViewFlowLayo
 * [x] Section Margin
 * [x] Section Padding
 * [x] Section Background
-* [ ] Section Alignment
 * [x] Item Spacing
 * [x] Item Margin
 * [x] Item Padding
@@ -101,7 +100,7 @@ func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElem
 ## Contributing
 
 ```console
-$ TEST=1 swift package generate-xcodeproj
+$ swift package generate-xcodeproj
 ```
 
 ## License
