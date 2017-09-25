@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "UICollectionViewFlexLayout"
-  s.version          = "0.3.1"
+  s.version          = "1.0.0"
   s.summary          = "A drop-in replacement for UICollectionViewFlowLayout"
   s.homepage         = "https://github.com/devxoul/UICollectionViewFlexLayout"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -11,8 +11,4 @@ Pod::Spec.new do |s|
   s.frameworks   = "UIKit"
 
   s.ios.deployment_target = "8.0"
-
-  s.pod_target_xcconfig = {
-    "SWIFT_VERSION" => "3.1"
-  }
 end
