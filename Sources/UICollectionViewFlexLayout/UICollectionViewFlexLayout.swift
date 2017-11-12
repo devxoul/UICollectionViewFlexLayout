@@ -10,6 +10,13 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
   private(set) var itemBackgroundAttributes: [IndexPath: UICollectionViewLayoutAttributes] = [:]
   private(set) var cachedContentSize: CGSize = .zero
 
+  private(set) var minXSectionAttribute: [Int: UICollectionViewLayoutAttributes] = [:]
+  private(set) var minYSectionAttribute: [Int: UICollectionViewLayoutAttributes] = [:]
+  private(set) var maxXSectionAttribute: [Int: UICollectionViewLayoutAttributes] = [:]
+  private(set) var maxYSectionAttribute: [Int: UICollectionViewLayoutAttributes] = [:]
+
+  private(set) var minimumItemZIndex: Int = 0
+
   override open func prepare() {
     self.prepareItemAttributes()
     self.prepareSectionAttributes()
@@ -23,6 +30,10 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
 
     self.layoutAttributes.removeAll()
     self.itemBackgroundAttributes.removeAll()
+    self.minXSectionAttribute.removeAll()
+    self.minYSectionAttribute.removeAll()
+    self.maxXSectionAttribute.removeAll()
+    self.maxYSectionAttribute.removeAll()
 
     for section in 0..<collectionView.numberOfSections {
       let sectionVerticalSpacing: CGFloat
@@ -80,6 +91,22 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         offset.x += itemMargin.left + itemPadding.left + itemSize.width + itemPadding.right + itemMargin.right
         maxItemBottom = max(maxItemBottom, itemMargin.top + itemPadding.top + itemSize.height + itemPadding.bottom + itemMargin.bottom)
         self.layoutAttributes[indexPath] = attributes
+
+        if self.minXSectionAttribute[section]?.frame.minX ?? .greatestFiniteMagnitude > attributes.frame.minX {
+          self.minXSectionAttribute[section] = attributes
+        }
+        if self.minYSectionAttribute[section]?.frame.minY ?? .greatestFiniteMagnitude > attributes.frame.minY {
+          self.minYSectionAttribute[section] = attributes
+        }
+        if self.maxXSectionAttribute[section]?.frame.maxX ?? -.greatestFiniteMagnitude < attributes.frame.maxX {
+          self.maxXSectionAttribute[section] = attributes
+        }
+        if self.maxYSectionAttribute[section]?.frame.maxY ?? -.greatestFiniteMagnitude < attributes.frame.maxY {
+          self.maxYSectionAttribute[section] = attributes
+        }
+        if self.minimumItemZIndex > attributes.zIndex {
+          self.minimumItemZIndex = attributes.zIndex
+        }
       }
 
       offset.y += maxItemBottom + sectionPadding.bottom + sectionMargin.bottom
@@ -91,11 +118,10 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
     guard let collectionView = self.collectionView else { return }
     self.sectionBackgroundAttributes.removeAll()
     for section in 0..<collectionView.numberOfSections {
-      let layoutAttributes = self.layoutAttributes.lazy.filter { $0.key.section == section }.map { $0.value }
-      guard let minXAttribute = layoutAttributes.min(by: { $0.frame.minX < $1.frame.minX }) else { continue }
-      guard let minYAttribute = layoutAttributes.min(by: { $0.frame.minY < $1.frame.minY }) else { continue }
-      guard let maxXAttribute = layoutAttributes.max(by: { $0.frame.maxX < $1.frame.maxX }) else { continue }
-      guard let maxYAttribute = layoutAttributes.max(by: { $0.frame.maxY < $1.frame.maxY }) else { continue }
+      guard let minXAttribute = self.minXSectionAttribute[section] else { continue }
+      guard let minYAttribute = self.minYSectionAttribute[section] else { continue }
+      guard let maxXAttribute = self.maxXSectionAttribute[section] else { continue }
+      guard let maxYAttribute = self.maxYSectionAttribute[section] else { continue }
       let (minX, minY) = (minXAttribute.frame.minX, minYAttribute.frame.minY)
       let (maxX, maxY) = (maxXAttribute.frame.maxX, maxYAttribute.frame.maxY)
       let (width, height) = (maxX - minX, maxY - minY)
@@ -128,12 +154,11 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
   }
 
   private func prepareZIndex() {
-    let minimumItemZIndex: Int = self.layoutAttributes.values.map { $0.zIndex }.min() ?? 0
     for attributes in self.itemBackgroundAttributes.values {
-      attributes.zIndex = minimumItemZIndex - 1
+      attributes.zIndex = self.minimumItemZIndex - 1
     }
     for attributes in self.sectionBackgroundAttributes.values {
-      attributes.zIndex = minimumItemZIndex - 2
+      attributes.zIndex = self.minimumItemZIndex - 2
     }
   }
 

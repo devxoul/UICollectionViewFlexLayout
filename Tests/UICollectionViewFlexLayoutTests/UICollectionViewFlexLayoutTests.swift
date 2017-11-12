@@ -383,5 +383,17 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     }
     XCTAssertEqual(self.layout.maximumWidth(forItemAt: IndexPath(item: 0, section: 0)), 303)
   }
+
+  func testPerformance() {
+    measure {
+      Stubber.register(self.delegate.collectionView(_:layout:sizeForItemAt:)) { _ in
+        return CGSize(width: 50, height: 30)
+      }
+      self.dataSource(for: BasicSection.self).sections = (0..<100).map { _ in
+        BasicSection(items: .init(repeating: .init(), count: 10))
+      }
+      self.collectionView.collectionViewLayout.prepare()
+    }
+  }
 }
 #endif
