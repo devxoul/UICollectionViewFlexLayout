@@ -67,8 +67,8 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.cell(at: 1, 1)?.frame, CGRect(x: 40, y: 270, width: 40, height: 20))
     XCTAssertEqual(self.cell(at: 1, 2)?.frame, CGRect(x: 0,  y: 300, width: 40, height: 90))
 
-    XCTAssertEqual(self.background(at: 0)?.frame, CGRect(x: 0, y: 0,   width: 80, height: 270))
-    XCTAssertEqual(self.background(at: 1)?.frame, CGRect(x: 0, y: 270, width: 80, height: 120))
+    XCTAssertEqual(self.background(at: 0)?.frame, CGRect(x: 0, y: 0,   width: 100, height: 270))
+    XCTAssertEqual(self.background(at: 1)?.frame, CGRect(x: 0, y: 270, width: 100, height: 120))
     XCTAssertEqual(self.background(at: 2), nil)
 
     XCTAssertEqual(self.background(at: 0, 0)?.frame, CGRect(x: 0,  y: 0,   width: 40, height: 30))
@@ -227,8 +227,8 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.cell(at: 1, 1)?.frame, CGRect(x: 53, y: 214, width: 15, height: 40))
     XCTAssertEqual(self.cell(at: 1, 2)?.frame, CGRect(x: 8,  y: 290, width: 15, height: 40))
 
-    XCTAssertEqual(self.background(at: 0)?.frame, CGRect(x: 0, y: 0,   width: 80, height: 208))
-    XCTAssertEqual(self.background(at: 1)?.frame, CGRect(x: 0, y: 208, width: 80, height: 132))
+    XCTAssertEqual(self.background(at: 0)?.frame, CGRect(x: 0, y: 0,   width: 100, height: 208))
+    XCTAssertEqual(self.background(at: 1)?.frame, CGRect(x: 0, y: 208, width: 100, height: 132))
     XCTAssertEqual(self.background(at: 2), nil)
 
     XCTAssertEqual(self.background(at: 0, 0)?.frame, CGRect(x: 6,  y: 5,   width: 21, height: 44))
@@ -281,8 +281,8 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(self.cell(at: 1, 1)?.frame, CGRect(x: 164, y: 260, width: 60, height: 40))
     XCTAssertEqual(self.cell(at: 1, 2)?.frame, CGRect(x: 296, y: 260, width: 60, height: 40))
 
-    XCTAssertEqual(self.background(at: 0)?.frame, CGRect(x: 2, y: 1,   width: 390, height: 218))
-    XCTAssertEqual(self.background(at: 1)?.frame, CGRect(x: 2, y: 233, width: 390, height: 100))
+    XCTAssertEqual(self.background(at: 0)?.frame, CGRect(x: 2, y: 1,   width: 394, height: 218))
+    XCTAssertEqual(self.background(at: 1)?.frame, CGRect(x: 2, y: 233, width: 394, height: 100))
     XCTAssertEqual(self.background(at: 2), nil)
 
     XCTAssertEqual(self.background(at: 0, 0)?.frame, CGRect(x: 18,  y: 15,  width: 90, height: 68))

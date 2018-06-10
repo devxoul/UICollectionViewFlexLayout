@@ -10,9 +10,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
   private(set) var itemBackgroundAttributes: [IndexPath: UICollectionViewLayoutAttributes] = [:]
   private(set) var cachedContentSize: CGSize = .zero
 
-  private(set) var minXSectionAttribute: [Int: UICollectionViewLayoutAttributes] = [:]
   private(set) var minYSectionAttribute: [Int: UICollectionViewLayoutAttributes] = [:]
-  private(set) var maxXSectionAttribute: [Int: UICollectionViewLayoutAttributes] = [:]
   private(set) var maxYSectionAttribute: [Int: UICollectionViewLayoutAttributes] = [:]
 
   private(set) var minimumItemZIndex: Int = 0
@@ -30,9 +28,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
 
     self.layoutAttributes.removeAll()
     self.itemBackgroundAttributes.removeAll()
-    self.minXSectionAttribute.removeAll()
     self.minYSectionAttribute.removeAll()
-    self.maxXSectionAttribute.removeAll()
     self.maxYSectionAttribute.removeAll()
 
     for section in 0..<collectionView.numberOfSections {
@@ -92,14 +88,8 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         maxItemBottom = max(maxItemBottom, itemMargin.top + itemPadding.top + itemSize.height + itemPadding.bottom + itemMargin.bottom)
         self.layoutAttributes[indexPath] = attributes
 
-        if self.minXSectionAttribute[section]?.frame.minX ?? .greatestFiniteMagnitude > attributes.frame.minX {
-          self.minXSectionAttribute[section] = attributes
-        }
         if self.minYSectionAttribute[section]?.frame.minY ?? .greatestFiniteMagnitude > attributes.frame.minY {
           self.minYSectionAttribute[section] = attributes
-        }
-        if self.maxXSectionAttribute[section]?.frame.maxX ?? -.greatestFiniteMagnitude < attributes.frame.maxX {
-          self.maxXSectionAttribute[section] = attributes
         }
         if self.maxYSectionAttribute[section]?.frame.maxY ?? -.greatestFiniteMagnitude < attributes.frame.maxY {
           self.maxYSectionAttribute[section] = attributes
@@ -118,13 +108,13 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
     guard let collectionView = self.collectionView else { return }
     self.sectionBackgroundAttributes.removeAll()
     for section in 0..<collectionView.numberOfSections {
-      guard let minXAttribute = self.minXSectionAttribute[section] else { continue }
       guard let minYAttribute = self.minYSectionAttribute[section] else { continue }
-      guard let maxXAttribute = self.maxXSectionAttribute[section] else { continue }
       guard let maxYAttribute = self.maxYSectionAttribute[section] else { continue }
-      let (minX, minY) = (minXAttribute.frame.minX, minYAttribute.frame.minY)
-      let (maxX, maxY) = (maxXAttribute.frame.maxX, maxYAttribute.frame.maxY)
-      let (width, height) = (maxX - minX, maxY - minY)
+      let minY = minYAttribute.frame.minY
+      let maxY = maxYAttribute.frame.maxY
+      let sectionMargin = self.margin(forSectionAt: section)
+      let width = collectionView.frame.width - sectionMargin.left - sectionMargin.right
+      let height = maxY - minY
       guard width > 0 && height > 0 else { continue }
 
       let sectionPadding = self.padding(forSectionAt: section)
@@ -133,20 +123,16 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         with: IndexPath(item: 0, section: section)
       )
 
-      let itemMarginLeft = self.margin(forItemAt: minXAttribute.indexPath).left
       let itemMarginTop = self.margin(forItemAt: minYAttribute.indexPath).top
-      let itemMarginRight = self.margin(forItemAt: maxXAttribute.indexPath).right
       let itemMarginBottom = self.margin(forItemAt: maxYAttribute.indexPath).bottom
 
-      let itemPaddingLeft = self.padding(forItemAt: minXAttribute.indexPath).left
       let itemPaddingTop = self.padding(forItemAt: minYAttribute.indexPath).top
-      let itemPaddingRight = self.padding(forItemAt: maxXAttribute.indexPath).right
       let itemPaddingBottom = self.padding(forItemAt: maxYAttribute.indexPath).bottom
 
       attributes.frame = CGRect(
-        x: minX - sectionPadding.left - itemPaddingLeft - itemMarginLeft,
+        x: sectionMargin.left,
         y: minY - sectionPadding.top - itemPaddingTop - itemMarginTop,
-        width: width + sectionPadding.left + sectionPadding.right + itemPaddingLeft + itemPaddingRight + itemMarginLeft + itemMarginRight,
+        width: width,
         height: height + sectionPadding.top + sectionPadding.bottom + itemPaddingTop + itemPaddingBottom + itemMarginTop + itemMarginBottom
       )
       self.sectionBackgroundAttributes[section] = attributes
