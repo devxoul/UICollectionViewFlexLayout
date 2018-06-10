@@ -327,7 +327,7 @@ final class UICollectionViewFlexLayoutTests: TestCase {
 
     let minimumItemZIndex: Int = dataSource.sections.enumerated()
       .flatMap { sectionIndex, section in
-        section.items.indices.flatMap { itemIndex in
+        section.items.indices.compactMap { itemIndex in
           self.cell(at: sectionIndex, itemIndex)
         }
       }
@@ -336,7 +336,7 @@ final class UICollectionViewFlexLayoutTests: TestCase {
     XCTAssertEqual(minimumItemZIndex, -24)
 
     let minimumSectionZIndex: Int = dataSource.sections.indices
-      .flatMap { self.background(at: $0)?.zIndex }
+      .compactMap { self.background(at: $0)?.zIndex }
       .min() ?? 0
     XCTAssertLessThan(minimumSectionZIndex, minimumItemZIndex)
 
