@@ -87,13 +87,13 @@ func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElem
 
 * **Using with RxCocoa**
 
-    If you're using UICollectionView with RxSwift and RxCocoa, you should create an extension of `RxCollectionViewDelegateProxy` to support delegate proxy.
+    If you're using UICollectionView with RxSwift and RxCocoa, you should create an extension of `_RXDelegateProxy` class to support delegate proxy.
 
     ```swift
     import RxCocoa
     import UICollectionViewFlexLayout
 
-    extension RxCollectionViewDelegateProxy: UICollectionViewDelegateFlexLayout {
+    extension _RXDelegateProxy: UICollectionViewDelegateFlexLayout {
     }
     ```
 
