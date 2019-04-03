@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "UICollectionViewFlexLayout"
-  s.version          = "1.1.0"
+  s.version          = "1.2.0"
   s.summary          = "A drop-in replacement for UICollectionViewFlowLayout"
   s.homepage         = "https://github.com/devxoul/UICollectionViewFlexLayout"
   s.license          = { :type => "MIT", :file => "LICENSE" }
